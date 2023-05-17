@@ -93,8 +93,37 @@ void closeWindow()
 
 int main(int argc, char** argv)
 {
+    // start SDL and create window
+    bool initSuccess = init();
 
+    if(!initSuccess)
+    {
+        printf("Failed to initialize.\n" );
+    }
+    else
+    {
+        // load media
+        bool loadSuccess = loadMedia();
+        if(!loadSuccess)
+        {
+            printf("Failed to load media.\n" );
+        }
+        else
+        {
+            // apply image
+            SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL);
 
+            // update surface
+            SDL_UpdateWindowSurface( gWindow );
+
+            // hack the window to stay up
+            SDL_Event e; bool quit = false; while( quit == false ){ while( SDL_PollEvent(&e)){if(e.type == SDL_QUIT) quit = true; }}
+
+        }
+    }
+
+    // free resources and close SDL
+    exit(0);
 
     return 0;
 }
