@@ -6,19 +6,29 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
+// Global variables
+// the window we are rendering to
+SDL_Window *gWindow = NULL;
+
+// the surface contained by the window
+SDL_Surface* gScreenSurface = NULL;
+
+// the image we will load and show on the screen
+SDL_Surface* gHelloWorld = NULL;
+
+// startup SDL and create window
 bool init();
 
+// load Media
 bool loadMedia();
 
-bool closeWindow();
+// Frees media and shuts down SDL
+void closeWindow();
 
-int main(int argc, char** argv)
+
+bool init()
 {
-    // window to which we are rendering
-    SDL_Window* window = NULL;
-
-    // surface contained by the window
-    SDL_Surface* screenSurface = NULL;
+    bool success = true;
 
     // initialize
     // Getting -1 would indicate an error.
@@ -29,36 +39,43 @@ int main(int argc, char** argv)
     else
     {
         // Create window
-        window = SDL_CreateWindow( "SDL tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+        gWindow = SDL_CreateWindow( "SDL tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
         
         // if there is an erorr when creating the window
-        if(window == NULL)
+        if(gWindow == NULL)
         {
             printf("Window could not be created. SDL_Error: %s\n", SDL_GetError() );
+            success = false;
         }
         else
         {
             // get window surface
-            screenSurface = SDL_GetWindowSurface( window);
-
-            // fill the surface white
-            SDL_FillRect(screenSurface, NULL, SDL_MapRGB( screenSurface->format, 0xFF, 0xFF, 0xFF) );
-
-            // update the surface. 
-            // Do this, or else the changes will not be shown.
-            SDL_UpdateWindowSurface( window );
-
-            // Make the window stay up
-            SDL_Event e; bool quit = false; while(quit == false) { while(SDL_PollEvent(&e)){ if(e.type == SDL_QUIT ) quit = true; } }
+            gScreenSurface = SDL_GetWindowSurface( gWindow);
         }
-
     }
 
-    // destory the window
-    SDL_DestroyWindow( window);
+    return success;
+}
 
-    // quit subsystems
-    SDL_Quit();
+bool loadMedia()
+{
+    // flag for loading success
+    bool success = true;
+
+    // load splash image
+
+    return success;
+}
+
+void closeWindow()
+{
+    return;
+}
+
+int main(int argc, char** argv)
+{
+
+
 
     return 0;
 }
