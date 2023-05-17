@@ -6,7 +6,8 @@
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
-// Global variables
+// ----- Global variables -----
+
 // the window we are rendering to
 SDL_Window *gWindow = NULL;
 
@@ -15,6 +16,8 @@ SDL_Surface* gScreenSurface = NULL;
 
 // the image we will load and show on the screen
 SDL_Surface* gHelloWorld = NULL;
+
+// --------------------------------
 
 // startup SDL and create window
 bool init();
@@ -63,13 +66,29 @@ bool loadMedia()
     bool success = true;
 
     // load splash image
+    gHelloWorld = SDL_LoadBMP("hello_world.bmp");
+
+    // if surface fails to load   
+    if(gHelloWorld == NULL)
+    {
+        printf("Unable to load image %s. SDL error: %s\n", "hello_world.bmp", SDL_GetError() );
+        success = false;
+    }
 
     return success;
 }
 
 void closeWindow()
 {
-    return;
+    // deallocate surface
+    SDL_FreeSurface( gHelloWorld );
+
+    // destroy window
+    SDL_DestroyWindow( gWindow );
+    gWindow = NULL;
+
+    // quit SDL subsystems
+    SDL_Quit();
 }
 
 int main(int argc, char** argv)
