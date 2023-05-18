@@ -15,7 +15,7 @@ SDL_Window *gWindow = NULL;
 SDL_Surface* gScreenSurface = NULL;
 
 // the image we will load and show on the screen
-SDL_Surface* gHelloWorld = NULL;
+SDL_Surface* xOut = NULL;
 
 // --------------------------------
 
@@ -55,9 +55,9 @@ bool init()
             // get window surface
             gScreenSurface = SDL_GetWindowSurface( gWindow);
         }
-    }
 
     return success;
+    }
 }
 
 bool loadMedia()
@@ -66,12 +66,12 @@ bool loadMedia()
     bool success = true;
 
     // load splash image
-    gHelloWorld = SDL_LoadBMP("hello_world.bmp");
+    xOut = SDL_LoadBMP("x.bmp");
 
     // if surface fails to load   
-    if(gHelloWorld == NULL)
+    if(xOut == NULL)
     {
-        printf("Unable to load image %s. SDL error: %s\n", "hello_world.bmp", SDL_GetError() );
+        printf("Unable to load image %s. SDL error: %s\n", "x.bmp", SDL_GetError() );
         success = false;
     }
 
@@ -81,7 +81,7 @@ bool loadMedia()
 void closeWindow()
 {
     // deallocate surface
-    SDL_FreeSurface( gHelloWorld );
+    SDL_FreeSurface( xOut );
 
     // destroy window
     SDL_DestroyWindow( gWindow );
@@ -110,15 +110,34 @@ int main(int argc, char** argv)
         }
         else
         {
-            // apply image
-            SDL_BlitSurface( gHelloWorld, NULL, gScreenSurface, NULL);
+            // main loop flag
+            bool quit = false;
 
-            // update surface
-            SDL_UpdateWindowSurface( gWindow );
+            // event handler
+            SDL_Event e;
+            
+            // while program is running
+            while( !quit )
+            {
+                // handle events on queue
+                while( SDL_PollEvent( &e ) != 0 )
+                {
+                    // SDL_PollEvent returns 0 if the queue is empty.
+                    // Loop body executes if there was something in the queue.
 
-            // hack the window to stay up
-            SDL_Event e; bool quit = false; while( quit == false ){ while( SDL_PollEvent(&e)){if(e.type == SDL_QUIT) quit = true; }}
+                    // user requests quit
+                    if( e.type == SDL_QUIT )
+                    {
+                        quit = true;
+                    }
+                }
 
+                // apply image
+                SDL_BlitSurface( xOut, NULL, gScreenSurface, NULL);
+
+                // update surface
+                SDL_UpdateWindowSurface( gWindow );
+            }
         }
     }
 
