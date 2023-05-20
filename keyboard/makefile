@@ -1,10 +1,10 @@
-all: event
+all: keyboard
 
-event: event.o
-	gcc -lSDL2 -o event event.o
+keyboard: keyboard.o
+	gcc -lSDL2 -o keyboard keyboard.o
 
-event.o: event.c
-	gcc -c event.c
+keyboard.o: keyboard.c
+	gcc -c keyboard.c
 
 clean:
-	rm event.o event
+	rm keyboard.o keyboard
