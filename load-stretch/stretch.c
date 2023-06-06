@@ -6,7 +6,7 @@ and may not be redistributed without written permission.*/
 #include <stdbool.h>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
+const int SCREEN_WIDTH = 840;
 const int SCREEN_HEIGHT = 480;
 
 //Starts up SDL and creates window
