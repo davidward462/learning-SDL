@@ -23,6 +23,8 @@ bool CloseWindow();
 // load image as texture
 SDL_Texture* loadTexture(char* path);
 
+
+
 int main(int argc, char **argv)
 {
     return 0;
